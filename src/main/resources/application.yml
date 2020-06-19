@@ -1,0 +1,19 @@
+##logging##
+logging:
+  path: E:\\custom_project\\java\\framework\\log
+  level:
+    com.huchx : DEBUG
+    org.springframework.web : INFO
+    org.hibernate : ERROR
+
+## database
+spring:
+  datasource:
+    url: http://localhost:3306/framework?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update

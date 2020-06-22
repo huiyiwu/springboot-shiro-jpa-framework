@@ -25,7 +25,7 @@ public class ApiContstants {
     public  static ArrayList HEADERS =new ArrayList();
 
     static {
-        HEADERS.add("appkey");
+        HEADERS.add("userId");
         HEADERS.add("token");
     }
 }

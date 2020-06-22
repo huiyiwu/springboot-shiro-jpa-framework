@@ -21,7 +21,7 @@ public class PasswordHelper {
 	public static void main(String[] args) {
 		PasswordHelper passwordHelper = new PasswordHelper();
 		MUserEntity user = new MUserEntity();
-		user.setUserName("admin");
+		user.setUserName("huchx");
 		user.setPassword("123456");
 		user.setSalt(ApiContstants.PWD_SALT);
 		passwordHelper.encryptPassword(user);

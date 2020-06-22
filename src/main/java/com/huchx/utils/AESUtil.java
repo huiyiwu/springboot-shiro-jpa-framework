@@ -32,7 +32,7 @@ public class AESUtil {
 
     public static void main(String[] args) throws Exception {
         ShiroAuthToken token = new ShiroAuthToken();
-        token.setUserId("123456");
+        token.setUserId("1");
         String content = JSONObject.toJSONString(token);
         System.out.println("加密前：" + content);
 

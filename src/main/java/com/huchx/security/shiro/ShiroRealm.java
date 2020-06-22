@@ -1,8 +1,10 @@
 package com.huchx.security.shiro;
 
-import com.huchx.ApiContstants;
+import com.huchx.entity.MUserEntity;
+import com.huchx.exception.TokenExistException;
+import com.huchx.exception.TokenExpiredException;
 import com.huchx.security.TokenUtil;
-import com.huchx.utils.md5.MD5Util;
+import com.huchx.service.ShiroService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -12,11 +14,15 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
 public class ShiroRealm extends AuthorizingRealm {
     Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
+
+    @Autowired
+    ShiroService shiroService;
     /**
      * 用户授权
      * @param principalCollection
@@ -36,9 +42,21 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        ShiroAuthToken token = (ShiroAuthToken) authenticationToken;
-        TokenUtil.checkToken(token);
-        return new SimpleAuthenticationInfo(token,"01ab818e8eee39056ac07a3ad4f03f88", ByteSource.Util.bytes(ApiContstants.PWD_SALT),getName());
+        ShiroAuthToken shiroAuthToken = (ShiroAuthToken) authenticationToken;
+        MUserEntity mUserEntity = shiroService.findUserById(Long.valueOf(shiroAuthToken.getUserId()));
+        if (mUserEntity == null) {
+            throw new UnknownAccountException("用户不存在");
+        }
+        try {
+            TokenUtil.checkToken(mUserEntity.getToken(),shiroAuthToken);
+        }catch (TokenExistException e){
+         throw new UnknownAccountException(e.getMessage());
+        }catch (TokenExpiredException e){
+            throw new UnknownAccountException(e.getMessage());
+        }catch (Exception e){
+            throw new UnknownAccountException(e.getMessage());
+        }
+        return new SimpleAuthenticationInfo(shiroAuthToken,mUserEntity.getPassword(), ByteSource.Util.bytes(mUserEntity.getPassword()),getName());
     }
 
     @Override

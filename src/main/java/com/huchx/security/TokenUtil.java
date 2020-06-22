@@ -1,10 +1,10 @@
 package com.huchx.security;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.huchx.ApiContstants;
 import com.huchx.exception.ParameterMissException;
 import com.huchx.exception.ParseObjectException;
+import com.huchx.exception.TokenExistException;
 import com.huchx.exception.TokenExpiredException;
 import com.huchx.security.shiro.ShiroAuthToken;
 import com.huchx.utils.AESUtil;
@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 public class TokenUtil {
@@ -44,11 +43,21 @@ public class TokenUtil {
 
     /**
      *
+     * @param token
      * @param shiroAuthToken
      */
-    public static void checkToken(ShiroAuthToken shiroAuthToken) {
-        logger.info("token 有效性验证成功");
+    public static boolean  checkToken(String token, ShiroAuthToken shiroAuthToken) throws TokenExpiredException, TokenExistException, ParseObjectException {
         // TODO: 验证token有效性
+        if (StringUtils.isEmpty(token)||shiroAuthToken==null){
+            throw new TokenExistException("用户缺少token信息");
+        }
+        if (shiroAuthToken==null){
+            shiroAuthToken = TokenUtil.tokenToUser(token);
+        }
+        if (System.currentTimeMillis()>shiroAuthToken.getValidTimeMillons()){
+            throw new TokenExpiredException("token已过期");
+        }
+        return true;
     }
 
     public static ShiroAuthToken parseToken(HttpServletRequest request) throws ParameterMissException, ParseObjectException, TokenExpiredException {

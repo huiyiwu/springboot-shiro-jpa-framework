@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * 请求拦截器
+ */
 public class ApiRuleInterceptor extends HandlerInterceptorAdapter {
     private Logger logger = LoggerFactory.getLogger(ApiRuleInterceptor.class);
     @Override

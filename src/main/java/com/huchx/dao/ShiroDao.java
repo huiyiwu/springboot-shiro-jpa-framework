@@ -1,9 +1,8 @@
 package com.huchx.dao;
 
 import com.huchx.entity.MUserEntity;
-import com.huchx.respository.MyJpaRepository;
+import com.huchx.repository.MyJpaRepository;
 
-import javax.persistence.Id;
 
 public interface ShiroDao extends MyJpaRepository<MUserEntity,Long> {
 

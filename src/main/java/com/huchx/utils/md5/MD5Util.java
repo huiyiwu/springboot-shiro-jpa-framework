@@ -9,6 +9,9 @@ import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * MD5加密
+ */
 public enum  MD5Util {
     INSTANCE;
 

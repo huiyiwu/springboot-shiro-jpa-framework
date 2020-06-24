@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Token的一些验证方法
+ */
 public class TokenUtil {
     private static Logger logger = LoggerFactory.getLogger(ApiContstants.API_ERR_NAME);
 
@@ -30,6 +33,11 @@ public class TokenUtil {
         logger.debug("aaa");
     }
 
+    /**
+     * 检查头部信息是否完整
+     * @param request
+     * @throws ParameterMissException
+     */
     private static void checkHeader(HttpServletRequest request) throws ParameterMissException {
         if (ApiContstants.HEADERS!=null&&ApiContstants.HEADERS.size()>0){
             for (Object name:ApiContstants.HEADERS
@@ -52,7 +60,7 @@ public class TokenUtil {
             throw new TokenExistException("用户缺少token信息");
         }
         if (shiroAuthToken==null){
-            shiroAuthToken = TokenUtil.tokenToUser(token);
+            shiroAuthToken = TokenUtil.tokenToAuthToken(token);
         }
         if (System.currentTimeMillis()>shiroAuthToken.getValidTimeMillons()){
             throw new TokenExpiredException("token已过期");
@@ -65,14 +73,14 @@ public class TokenUtil {
         if (StringUtils.isEmpty(token)){
             throw new ParameterMissException("缺少头部信息token");
         }
-       ShiroAuthToken shiroAuthToken = tokenToUser(token);
+       ShiroAuthToken shiroAuthToken = tokenToAuthToken(token);
         if (System.currentTimeMillis()>shiroAuthToken.getValidTimeMillons()){
             throw new TokenExpiredException("token已失效,请重新登陆");
         }
         return  shiroAuthToken;
     }
 
-    private static ShiroAuthToken tokenToUser(String token) throws ParseObjectException {
+    private static ShiroAuthToken tokenToAuthToken(String token) throws ParseObjectException {
 String tokenJson = null;
         try {
             tokenJson = AESUtil.decrypt(token);

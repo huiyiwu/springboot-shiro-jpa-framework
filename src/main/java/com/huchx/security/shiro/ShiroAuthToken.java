@@ -5,6 +5,9 @@ import org.apache.shiro.authc.AuthenticationToken;
 
 import java.util.Calendar;
 
+/**
+ * 安全验证信息对象
+ */
 public class ShiroAuthToken implements AuthenticationToken {
 
     private String token;
@@ -12,6 +15,12 @@ public class ShiroAuthToken implements AuthenticationToken {
     private Long validTimeMillons;
 
     public ShiroAuthToken() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.SECOND, ApiContstants.SESSION_TIMEOUT_SECONDS);
+        this.validTimeMillons = c.getTime().getTime();
+    }
+    public ShiroAuthToken(Long id) {
+        this.userId = String.valueOf(id);
         Calendar c = Calendar.getInstance();
         c.add(Calendar.SECOND, ApiContstants.SESSION_TIMEOUT_SECONDS);
         this.validTimeMillons = c.getTime().getTime();

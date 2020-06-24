@@ -19,6 +19,9 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * 加密生成token工具
+ */
 public class AESUtil {
     /**
      * 密钥

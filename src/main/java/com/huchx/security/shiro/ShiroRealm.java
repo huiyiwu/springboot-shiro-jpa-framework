@@ -18,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * 身份验证、权限角色验证
+ */
 public class ShiroRealm extends AuthorizingRealm {
     Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
 

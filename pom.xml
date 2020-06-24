@@ -8,9 +8,10 @@
   <artifactId>framework</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>framework</name>
+  <name>springboot-shiro-jpa-framework</name>
   <!-- FIXME change it to the project's website -->
-  <url>default framework</url>
+  <url>springboot-shiro-jpa-framework</url>
+    <description>springboot-shiro-jpa-framework</description>
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -64,6 +65,7 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-data-jpa</artifactId>
       </dependency>
+      <!--数据库连接驱动-->
       <dependency>
           <groupId>mysql</groupId>
           <artifactId>mysql-connector-java</artifactId>

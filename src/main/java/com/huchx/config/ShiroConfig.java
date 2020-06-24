@@ -14,6 +14,10 @@ import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * shiro 安全验证插件
+ * 关于shiro的配置
+ */
 @Configuration
 public class ShiroConfig {
 

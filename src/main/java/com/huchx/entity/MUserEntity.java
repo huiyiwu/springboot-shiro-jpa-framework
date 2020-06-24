@@ -4,13 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "m_user")
-public class MUserEntity {
+public class MUserEntity implements Serializable {
     private long id;
-    @Column(name = "name")
-    private String userName;
+    private String name;
     private String password;
     private String salt;
     private String token;
@@ -18,9 +18,9 @@ public class MUserEntity {
     public MUserEntity() {
     }
 
-    public MUserEntity(long id, String userName, String password, String salt,String token) {
+    public MUserEntity(long id, String name, String password, String salt,String token) {
         this.id = id;
-        this.userName = userName;
+        this.name = name;
         this.password = password;
         this.salt = salt;
         this.token = token;
@@ -43,14 +43,6 @@ public class MUserEntity {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -65,5 +57,13 @@ public class MUserEntity {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

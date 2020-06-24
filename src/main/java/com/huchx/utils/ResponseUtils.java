@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * response 返回数据对象工具类
+ * @param <T>
+ */
 public class ResponseUtils<T> {
     private static final String CODE = "code";
     private static final String MESSAGE = "message";

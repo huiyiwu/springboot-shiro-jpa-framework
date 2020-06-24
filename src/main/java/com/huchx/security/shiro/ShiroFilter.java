@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * 安全拦截器，login委托给此对象处理
+ */
 public class ShiroFilter extends AccessControlFilter {
     Logger logger = LoggerFactory.getLogger(ShiroFilter.class);
     @Override

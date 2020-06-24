@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
-import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -20,12 +19,19 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
-
+    /**
+     * 设置RealmBean
+     * @return
+     */
     @Bean
     public ShiroRealm shiroRealm(){
         return new ShiroRealm();
     }
 
+    /**
+     * 设置安全管理类
+     * @return
+     */
     @Bean
     public SecurityManager securityManager(){
         DefaultSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -33,15 +39,22 @@ public class ShiroConfig {
         return securityManager;
     }
 
+    /**
+     * 设置拦截规则
+     * @param securityManager
+     * @return
+     */
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        //配置安全管理类
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String,String> shiroFilterMap = new LinkedHashMap<>();
         shiroFilterMap.put("/login","anon");
         shiroFilterMap.put("/**","myFilter");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroFilterMap);
 
+        //自定义拦截规则
         ShiroFilter filter = new ShiroFilter();
         Map<String, Filter> filterMap = new LinkedHashMap<>();
         filterMap.put("myFilter",filter);
